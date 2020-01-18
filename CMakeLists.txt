@@ -100,6 +100,7 @@ add_library(${PROJECT_NAME}_remote_control src/remote_control.cpp)
 target_link_libraries(${PROJECT_NAME}_remote_control)
 ament_target_dependencies(${PROJECT_NAME}_remote_control
   rclcpp
+  sensor_msgs
 )
 
 # Visualization Tools Library
@@ -113,6 +114,7 @@ target_link_libraries(${PROJECT_NAME}
   ${Boost_LIBRARIES}
 )
 ament_target_dependencies(${PROJECT_NAME}
+  eigen_stl_containers
   rclcpp
   rclcpp_components
   visualization_msgs
@@ -131,6 +133,7 @@ add_library(${PROJECT_NAME}_imarker_simple
 )
 target_link_libraries(${PROJECT_NAME}_imarker_simple
   ${Boost_LIBRARIES}
+  ${PROJECT_NAME}
 )
 ament_target_dependencies(${PROJECT_NAME}_imarker_simple
   rclcpp
@@ -157,7 +160,7 @@ target_link_libraries(${PROJECT_NAME}_imarker_simple_demo
   ${PROJECT_NAME}_imarker_simple
 )
 
-ament_target_dependencies(${PROJECT_NAME}_demo
+ament_target_dependencies(${PROJECT_NAME}_imarker_simple_demo
   rclcpp
 )
 
@@ -191,6 +194,11 @@ install(
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
+
+install(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/meshes"
+  DESTINATION "share/${PROJECT_NAME}"
+  )
 
 # Install shared resources
 install(DIRECTORY launch    DESTINATION share/${PROJECT_NAME})
